@@ -74,6 +74,13 @@
             <version>3.0.0</version> <!-- 使用最新版本 -->
         </dependency>
 
+        <!-- 在pom.xml中添加Weka依赖 -->
+        <dependency>
+            <groupId>nz.ac.waikato.cms.weka</groupId>
+            <artifactId>weka-stable</artifactId>
+            <version>3.8.6</version>
+        </dependency>
+
         <!-- 测试 -->
         <dependency>
             <groupId>junit</groupId>

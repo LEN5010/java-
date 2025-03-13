@@ -61,7 +61,7 @@ public class TradingSystem {
 
             // 7. 策略选择
             String strategyType = props.getProperty("strategy.type", "moving_average");
-            Map<LocalDate, TradeSignal> signals = new HashMap<>();
+            Map<LocalDate, TradeSignal> signals;
 
             if ("ml".equals(strategyType) || "machine_learning".equals(strategyType)) {
                 // 使用机器学习策略
@@ -138,14 +138,14 @@ public class TradingSystem {
      * 执行传统交易策略
      */
     private static Map<LocalDate, TradeSignal> executeTraditionalStrategy(Properties props, List<StockData> rawData, List<ProcessedData> processedData) {
-        String type = props.getProperty("strategy.type", "moving_average");
+        props.getProperty("strategy.type", "moving_average");
         TradingStrategy strategy = initStrategy(props);
 
         Map<LocalDate, TradeSignal> signals = new HashMap<>();
 
         // 计算移动平均线（用于可视化）
-        int shortWindow = Integer.parseInt(props.getProperty("ma.short_window", "5"));
-        int longWindow = Integer.parseInt(props.getProperty("ma.long_window", "20"));
+        props.getProperty("ma.short_window", "5");
+        props.getProperty("ma.long_window", "20");
 
         // 执行交易策略
         for (int i = 0; i < processedData.size(); i++) {
@@ -171,6 +171,7 @@ public class TradingSystem {
      * 执行机器学习策略
      */
     private static Map<LocalDate, TradeSignal> executeMLStrategy(Properties props, List<StockData> rawData, List<ProcessedData> processedData) {
+
         // 创建机器学习算法
         String algorithmType = props.getProperty("ml.algorithm", "randomforest");
         MachineLearningAlgorithm algorithm = createMLAlgorithm(props, algorithmType);
@@ -232,9 +233,13 @@ public class TradingSystem {
         Map<String, Object> algorithmParams = new HashMap<>();
 
         if ("randomforest".equals(algorithmType) || "random_forest".equals(algorithmType)) {
-            // 随机森林参数
+            // 简单随机森林参数
             algorithmParams.put("numTrees", Integer.parseInt(props.getProperty("ml.rf.num_trees", "100")));
             algorithmParams.put("maxDepth", Integer.parseInt(props.getProperty("ml.rf.max_depth", "10")));
+        } else if ("weka_rf".equals(algorithmType) || "weka_randomforest".equals(algorithmType)) {
+            // Weka随机森林参数
+            algorithmParams.put("numTrees", Integer.parseInt(props.getProperty("ml.weka_rf.num_trees", "100")));
+            algorithmParams.put("maxDepth", Integer.parseInt(props.getProperty("ml.weka_rf.max_depth", "0")));
         }
 
         return MLAlgorithmFactory.createAlgorithm(algorithmType, algorithmParams);

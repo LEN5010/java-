@@ -2,6 +2,7 @@ package com.quanttrading.ml.factory;
 
 import com.quanttrading.ml.MachineLearningAlgorithm;
 import com.quanttrading.ml.impl.SimpleRandomForestAlgorithm;
+import com.quanttrading.ml.impl.WekaRandomForestAlgorithm;
 
 import java.util.Map;
 
@@ -29,8 +30,13 @@ public class MLAlgorithmFactory {
         MachineLearningAlgorithm algorithm;
 
         switch (type.toLowerCase()) {
+            case "weka_rf":
+            case "weka_randomforest":
+                algorithm = new WekaRandomForestAlgorithm();
+                break;
             case "randomforest":
             case "random_forest":
+            case "simple_randomforest":
                 algorithm = new SimpleRandomForestAlgorithm();
                 break;
             default:
