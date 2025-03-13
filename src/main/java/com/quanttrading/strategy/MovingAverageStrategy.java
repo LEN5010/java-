@@ -1,4 +1,3 @@
-// src/main/java/com/quanttrading/strategy/MovingAverageStrategy.java
 package com.quanttrading.strategy;
 
 import com.quanttrading.model.ProcessedData;
@@ -35,8 +34,6 @@ public class MovingAverageStrategy implements TradingStrategy {
         double shortMA = calculateMA(historicalData, shortWindow);
         double longMA = calculateMA(historicalData, longWindow);
 
-        logger.debug("Date: {}, ShortMA: {}, LongMA: {}", currentData.getDate(), shortMA, longMA);
-
         if (shortMA > longMA) {
             return TradeSignal.BUY;
         } else if (shortMA < longMA) {
@@ -47,6 +44,10 @@ public class MovingAverageStrategy implements TradingStrategy {
     }
 
     private double calculateMA(List<ProcessedData> data, int window) {
+        if (data.size() < window) {
+            return 0;
+        }
+
         return data.stream()
                 .limit(window)
                 .mapToDouble(ProcessedData::getValue)

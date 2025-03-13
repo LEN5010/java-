@@ -1,4 +1,3 @@
-// src/main/java/com/quanttrading/model/ProcessedData.java
 package com.quanttrading.model;
 
 import java.time.LocalDate;

@@ -1,4 +1,3 @@
-// src/main/java/com/quanttrading/factory/StrategyFactory.java
 package com.quanttrading.factory;
 
 import com.quanttrading.strategy.MovingAverageStrategy;
